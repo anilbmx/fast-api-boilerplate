@@ -5,8 +5,7 @@ class BaseRequest(BaseModel):
     # may define additional fields or config shared across requests
     pass
 
-
-class PetCreateRequest(BaseRequest):
+class EmployeeCreate(BaseRequest):
     name: str
-    place: str
-    type: str
+    age: int
+    department: str

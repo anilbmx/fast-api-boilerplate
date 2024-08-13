@@ -5,7 +5,7 @@ from sqlalchemy import Connection, engine_from_config, pool
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from alembic import context
-from app.core.config import get_settings
+from app.utils.config import sqlalchemy_database_uri
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -30,7 +30,7 @@ target_metadata = Base.metadata
 
 
 def get_database_uri() -> str:
-    return get_settings().sqlalchemy_database_uri.render_as_string(hide_password=False)
+    return sqlalchemy_database_uri()
 
 
 def run_migrations_offline() -> None:
