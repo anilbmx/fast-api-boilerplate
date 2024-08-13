@@ -1,27 +1,24 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
-from app.api.api_router import api_router, auth_router
-from app.core.config import get_settings
+from app.routes.employee import router as employee_routes
+# from app.utils.config import get_settings
 
 app = FastAPI(
     title="minimal fastapi keycloak template",
     version="0.0.0",
     openapi_url="/openapi.json",
-    docs_url="/",
+    docs_url="/docs",
 )
 
-app.include_router(auth_router)
-app.include_router(api_router)
+app.include_router(employee_routes, prefix='/v1')
 
 # Sets all CORS enabled origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        str(origin).rstrip("/")
-        for origin in get_settings().security.backend_cors_origins
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,5 +27,8 @@ app.add_middleware(
 # Guards against HTTP Host Header attacks
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=get_settings().security.allowed_hosts,
+    allowed_hosts=["localhost", "127.0.0.1"],
 )
+
+if __name__ == "__main__":
+    uvicorn.run(host="0.0.0.0", port=8000, app=app)
