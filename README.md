@@ -1,61 +1,32 @@
 ## Quickstart
 
-### 1. Install dependecies with [Poetry](https://python-poetry.org/docs/)
-
+### 1. Clone repository
 ```bash
-cd your_project_name
-
-### Poetry install (python3.12)
-poetry install
+git clone <repo URL>
+cd fast-api-boilerplate
 ```
 
-### 2. Setup database and migrations
-
+### 2. Setup postgres using docker compose.
 ```bash
-### Setup database
 docker-compose up -d
+```
 
-### Run Alembic migrations
+### 3. Install dependecies using pip
+```bash
+pip install -r ./requirements.txt
+```
+
+### 4. Run Alembic migrations
+```bash
 alembic upgrade head
 ```
 
-### 3. Run app
-
+### 5. Run app
 ```bash
 uvicorn app.main:app --reload
+or
+python main.py
 ```
-
-<br>
-
-### 3. Create request and response schemas
-
-There are only 2 files: `requests.py` and `responses.py` in `schemas` folder and I would keep it that way even for few dozen of endpoints. Not to mention this is opinionated.
-
-```python
-# app/schemas/requests.py
-
-(...)
-
-
-class PetCreateRequest(BaseRequest):
-    pet_name: str
-
-```
-
-```python
-# app/schemas/responses.py
-
-(...)
-
-
-class PetResponse(BaseResponse):
-    id: int
-    pet_name: str
-    user_id: str
-
-```
-
-<br>
 
 ## License
 
