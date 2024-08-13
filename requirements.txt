@@ -3,7 +3,11 @@ uvicorn==0.30.5
 alembic==1.13.2
 asyncio==3.4.3
 python-jose
-pydantic==2.8.2
+pydantic[email]==2.8.2
 pydantic-settings==2.4.0
 python-dotenv==1.0.0
 SQLAlchemy==2.0.32
+asyncpg==0.29.0
+httpx
+greenlet
+psycopg2

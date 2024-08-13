@@ -13,4 +13,4 @@ class Employee(Base):
     department = Column(String, nullable=False)
 
     def __repr__(self):
-        return f"<Employee(name={self.name}, age={self.age}, department={self.department})>"
+        return f"<Employee(id={self.id}, name={self.name}, age={self.age}, department={self.department})>"

@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.utils.database_session import get_async_session
 from app.models.employee import Employee
 from app.schemas.requests import EmployeeCreate
-from app.schemas.responses import UserResponse
+from app.schemas.responses import EmployeeResponse
 from app.utils.auth import keycloak_authenticate
 from sqlalchemy.exc import IntegrityError
 # from app.utils.auth import auth_user
@@ -17,11 +17,11 @@ router = APIRouter(
 
 
 # @router.get("/fetch", dependencies=[Depends(auth_user)], response_model=UserResponse, description="Get all pets")
-@router.get("/fetch", response_model=UserResponse, description="Get all pets")
+@router.get("/fetch", response_model=list[EmployeeResponse], description="Fetch saved employees")
 async def get_all_employees(
     skip: int = 0,
     limit: int = 10,
-    user: dict[str] = Depends(keycloak_authenticate),
+    # user: dict[str] = Depends(keycloak_authenticate),
     db: AsyncSession = Depends(get_async_session)
     ):
     """
@@ -35,10 +35,10 @@ async def get_all_employees(
     employees = result.scalars().all()
     return employees
 
-@router.post("/save", response_model=UserResponse, description="Create pets")
+@router.post("/save", response_model=EmployeeResponse, description="Create pets")
 async def create_employee(
     employee: EmployeeCreate,
-    user: dict[str] = Depends(keycloak_authenticate),
+    # user: dict[str] = Depends(keycloak_authenticate),
     db: AsyncSession = Depends(get_async_session)):
     # Create an Employee instance
     db_employee = Employee(
